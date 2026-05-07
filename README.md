@@ -1,5 +1,7 @@
 # DUT Exams Plugin for Dank Material Shell
 
+![Screenshot](screenshot.png)
+
 A Dank Material Shell (DMS) widget that displays your final exam schedule from `sv.dut.udn.vn`.
 
 ## Features
