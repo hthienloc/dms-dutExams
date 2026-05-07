@@ -1,0 +1,17 @@
+{
+    "id": "dut-exams",
+    "name": "DUT Exams",
+    "description": "Displays final exam schedule from sv.dut.udn.vn",
+    "version": "1.0.0",
+    "license": "MIT",
+    "author": "Loc Huynh",
+    "icon": "event",
+    "type": "widget",
+    "capabilities": ["dankbar-widget"],
+    "component": "./ExamWidget.qml",
+    "settings": "./ExamSettings.qml",
+    "permissions": [
+        "settings_read",
+        "settings_write"
+    ]
+}
