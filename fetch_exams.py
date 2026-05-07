@@ -96,18 +96,28 @@ def get_exams_with_login(username, password):
         room_match = re.search(r'Phòng:\s*([^,]+)', exam_info)
         
         if date_match:
+            date_str = date_match.group(1)
+            # date_str is dd/mm/yyyy
+            d_parts = date_str.split('/')
+            if len(d_parts) == 3:
+                sort_date = f"{d_parts[2]}{d_parts[1]}{d_parts[0]}"
+            else:
+                sort_date = "99999999"
+
             # Normalize time for sorting (e.g., 7h00 -> 07:00, 13:00:00 -> 13:00)
             raw_time = time_match.group(1) if time_match else "00:00"
             norm_time = raw_time.replace('h', ':')
-            if len(norm_time.split(':')[0]) == 1:
-                norm_time = "0" + norm_time
+            t_parts = norm_time.split(':')
+            if len(t_parts[0]) == 1:
+                t_parts[0] = "0" + t_parts[0]
+            norm_time = ":".join(t_parts[:2]) # Keep only hh:mm
             
             exams.append({
                 "course": course_name,
-                "date": date_match.group(1),
+                "date": date_str,
                 "time": raw_time,
                 "room": room_match.group(1).strip() if room_match else "N/A",
-                "_sort_key": f"{date_match.group(3)}{date_match.group(2)}{date_match.group(1)}_{norm_time}"
+                "_sort_key": f"{sort_date}_{norm_time}"
             })
             
     # Sort exams chronologically
