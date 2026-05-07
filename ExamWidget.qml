@@ -158,11 +158,11 @@ PluginComponent {
                             }
 
                             Row {
-                                spacing: Theme.spacingS
+                                spacing: Theme.spacingM
                                 width: parent.width
                                 
                                 Item {
-                                    width: 100
+                                    width: 110
                                     height: dateText.height
                                     StyledText {
                                         id: dateText
@@ -174,7 +174,7 @@ PluginComponent {
                                 }
 
                                 Item {
-                                    width: 80
+                                    width: 90
                                     height: timeText.height
                                     StyledText {
                                         id: timeText
@@ -186,7 +186,7 @@ PluginComponent {
                                 }
 
                                 Item {
-                                    width: parent.width - 180 - Theme.spacingS * 2
+                                    width: parent.width - 200 - Theme.spacingM * 2
                                     height: roomText.height
                                     StyledText {
                                         id: roomText
