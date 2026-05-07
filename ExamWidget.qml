@@ -15,6 +15,10 @@ PluginComponent {
     property bool isLoading: false
     readonly property string pluginDir: Qt.resolvedUrl(".").toString().replace("file://", "")
 
+    // Dynamic popout height – updated by content
+    property real dynamicPopoutHeight: 300   // initial minimum
+    popoutHeight: dynamicPopoutHeight
+
     function refresh() {
         if (!pluginData.username || !pluginData.password) {
             errorMessage = "Please enter Student ID and Password in Settings.";
@@ -37,7 +41,6 @@ PluginComponent {
     on_PassChanged: refresh()
 
     Component.onCompleted: {
-        // Use a small delay to ensure PluginService and pluginData are fully synced
         Qt.callLater(() => {
             refresh();
         });
@@ -63,6 +66,8 @@ PluginComponent {
                     } else if (Array.isArray(result)) {
                         root.exams = result;
                         root.errorMessage = "";
+                        // Schedule popout resize after layout
+                        Qt.callLater(updatePopoutSize)
                     }
                 } catch (e) {
                     root.errorMessage = "Failed to process data from server.";
@@ -72,6 +77,13 @@ PluginComponent {
         }
         onExited: (exitCode, exitStatus) => {
             root.isLoading = false;
+        }
+    }
+
+    // Called whenever the popout content might change size
+    function updatePopoutSize() {
+        if (popoutColumn && popoutColumn.implicitHeight > 0) {
+            dynamicPopoutHeight = popoutColumn.implicitHeight;
         }
     }
 
@@ -115,7 +127,7 @@ PluginComponent {
     }
 
     popoutWidth: 400
-    popoutHeight: 450
+    // popoutHeight is now bound to dynamicPopoutHeight
 
     popoutContent: Component {
         PopoutComponent {
@@ -123,20 +135,23 @@ PluginComponent {
             headerText: "Final Exam Schedule"
             detailsText: root.isLoading ? "Loading..." : (root.errorMessage || (root.exams.length + " upcoming exams"))
             showCloseButton: false
-            
+
             Column {
+                id: popoutColumn   // used to measure total content height
                 width: parent.width
                 spacing: Theme.spacingM
 
+                // List of exams – no scroll, height == contentHeight
                 ListView {
+                    id: examList
                     width: parent.width
-                    height: Math.min(320, contentHeight)
+                    height: contentHeight   // show all items
                     model: root.exams
-                    clip: true
+                    interactive: false      // no scroll needed
                     spacing: Theme.spacingS
                     visible: root.exams.length > 0
-                    
-delegate: Rectangle {
+
+                    delegate: Rectangle {
                         width: ListView.view.width
                         height: innerColumn.height + Theme.spacingM * 2
                         color: Theme.surfaceContainerHigh
@@ -185,7 +200,7 @@ delegate: Rectangle {
                             Row {
                                 spacing: Theme.spacingM
                                 width: parent.width
-                                
+
                                 Item {
                                     width: 110
                                     height: dateText.height
@@ -225,20 +240,24 @@ delegate: Rectangle {
                             }
                         }
                     }
+
+                    // After items change, trigger size recalculation
+                    onContentHeightChanged: root.updatePopoutSize()
                 }
 
+                // Empty state or error message
                 Column {
                     width: parent.width
                     spacing: Theme.spacingM
                     visible: (root.exams.length === 0 || root.errorMessage) && !root.isLoading
-                    
+
                     DankIcon {
                         name: root.errorMessage ? "error_outline" : "event_available"
                         size: 48
                         color: Theme.surfaceVariantText
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
-                    
+
                     StyledText {
                         text: root.errorMessage || "No exam schedule found."
                         width: parent.width - Theme.spacingL * 2
@@ -249,6 +268,7 @@ delegate: Rectangle {
                     }
                 }
 
+                // Refresh button
                 DankButton {
                     text: "Refresh"
                     iconName: "refresh"
