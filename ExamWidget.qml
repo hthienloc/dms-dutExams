@@ -139,22 +139,7 @@ PluginComponent {
 delegate: Rectangle {
                         width: ListView.view.width
                         height: innerColumn.height + Theme.spacingM * 2
-                        color: getExamColor(index)
-                        radius: Theme.cornerRadius
-                        border.width: 1
-                        border.color: Theme.outlineLight
-
-                        function getExamColor(idx) {
-                            var colors = [
-                                "#1a2535",
-                                "#252f45",
-                                "#1f2a3d",
-                                "#2d384f",
-                                "#1e293b",
-                                "#343f57"
-                            ];
-                            return colors[idx % colors.length];
-                        }
+                        color: Theme.surfaceContainer
 
                         Rectangle {
                             id: indexBadge
