@@ -136,31 +136,53 @@ PluginComponent {
                     spacing: Theme.spacingS
                     visible: root.exams.length > 0
                     
-                    delegate: Rectangle {
+delegate: Rectangle {
                         width: ListView.view.width
                         height: innerColumn.height + Theme.spacingM * 2
                         color: getExamColor(index)
-                        radius: Theme.radiusM
+                        radius: Theme.cornerRadius
                         border.width: 1
                         border.color: Theme.outlineLight
 
                         function getExamColor(idx) {
-                            // Distinct colors for each exam to avoid confusion
                             var colors = [
-                                "#1a2535",  // Dark blue-gray
-                                "#252f45",  // Medium blue-gray
-                                "#1f2a3d",  // Slightly lighter
-                                "#2d384f",  // Alternative
-                                "#1e293b",  // Another shade
-                                "#343f57"   // Light variant
+                                "#1a2535",
+                                "#252f45",
+                                "#1f2a3d",
+                                "#2d384f",
+                                "#1e293b",
+                                "#343f57"
                             ];
                             return colors[idx % colors.length];
                         }
 
+                        Rectangle {
+                            id: indexBadge
+                            anchors.left: parent.left
+                            anchors.leftMargin: Theme.spacingM
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 24
+                            height: 24
+                            radius: 12
+                            color: Theme.primary
+
+                            StyledText {
+                                anchors.centerIn: parent
+                                text: (index + 1).toString()
+                                font.pixelSize: Theme.fontSizeSmall
+                                font.weight: Font.Bold
+                                color: Theme.onPrimary
+                            }
+                        }
+
                         Column {
                             id: innerColumn
-                            anchors.centerIn: parent
-                            width: parent.width - Theme.spacingL * 2
+                            anchors.left: indexBadge.right
+                            anchors.leftMargin: Theme.spacingM
+                            anchors.right: parent.right
+                            anchors.rightMargin: Theme.spacingL
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: parent.width - 80
                             spacing: 4
 
                             StyledText {
