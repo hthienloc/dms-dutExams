@@ -139,8 +139,23 @@ PluginComponent {
                     delegate: Rectangle {
                         width: ListView.view.width
                         height: innerColumn.height + Theme.spacingM * 2
-                        color: Theme.surfaceContainer
+                        color: getExamColor(index)
                         radius: Theme.radiusM
+                        border.width: 1
+                        border.color: Theme.outlineLight
+
+                        function getExamColor(idx) {
+                            // Distinct colors for each exam to avoid confusion
+                            var colors = [
+                                "#1a2535",  // Dark blue-gray
+                                "#252f45",  // Medium blue-gray
+                                "#1f2a3d",  // Slightly lighter
+                                "#2d384f",  // Alternative
+                                "#1e293b",  // Another shade
+                                "#343f57"   // Light variant
+                            ];
+                            return colors[idx % colors.length];
+                        }
 
                         Column {
                             id: innerColumn
