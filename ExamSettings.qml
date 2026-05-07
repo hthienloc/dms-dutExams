@@ -7,7 +7,7 @@ import qs.Modules.Plugins
 
 PluginSettings {
     id: root
-    pluginId: "dut-exams"
+    pluginId: "dutExams"
 
     StyledText {
         width: parent.width
