@@ -139,7 +139,7 @@ PluginComponent {
 delegate: Rectangle {
                         width: ListView.view.width
                         height: innerColumn.height + Theme.spacingM * 2
-                        color: Theme.surfaceContainer
+                        color: Theme.surfaceContainerHigh
                         radius: Theme.cornerRadius
                         border.width: 1
                         border.color: Theme.outlineLight
