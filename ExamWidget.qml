@@ -158,23 +158,44 @@ PluginComponent {
                             }
 
                             Row {
-                                spacing: Theme.spacingM
+                                spacing: Theme.spacingS
                                 width: parent.width
                                 
-                                StyledText {
-                                    text: "📅 " + modelData.date
-                                    font.pixelSize: Theme.fontSizeSmall
-                                    color: Theme.surfaceText
+                                Item {
+                                    width: 100
+                                    height: dateText.height
+                                    StyledText {
+                                        id: dateText
+                                        text: "📅 " + modelData.date
+                                        font.pixelSize: Theme.fontSizeSmall
+                                        color: Theme.surfaceText
+                                        anchors.left: parent.left
+                                    }
                                 }
-                                StyledText {
-                                    text: "🕒 " + modelData.time
-                                    font.pixelSize: Theme.fontSizeSmall
-                                    color: Theme.surfaceText
+
+                                Item {
+                                    width: 80
+                                    height: timeText.height
+                                    StyledText {
+                                        id: timeText
+                                        text: "🕒 " + modelData.time
+                                        font.pixelSize: Theme.fontSizeSmall
+                                        color: Theme.surfaceText
+                                        anchors.left: parent.left
+                                    }
                                 }
-                                StyledText {
-                                    text: "📍 " + modelData.room
-                                    font.pixelSize: Theme.fontSizeSmall
-                                    color: Theme.surfaceText
+
+                                Item {
+                                    width: parent.width - 180 - Theme.spacingS * 2
+                                    height: roomText.height
+                                    StyledText {
+                                        id: roomText
+                                        text: "📍 " + modelData.room
+                                        font.pixelSize: Theme.fontSizeSmall
+                                        color: Theme.surfaceText
+                                        anchors.left: parent.left
+                                        elide: Text.ElideRight
+                                    }
                                 }
                             }
                         }
