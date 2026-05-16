@@ -28,3 +28,9 @@ Your credentials are stored locally on your machine by Dank Material Shell's con
 
 ## License
 GPLv3 - See [LICENSE](LICENSE) for details.
+
+## Roadmap / TODO
+
+- Export exam schedule to .ics format for Google/Outlook Calendar integration.
+- Map integration for university exam room locations.
+- Integration with the university's academic results portal to track performance trends alongside schedules.
