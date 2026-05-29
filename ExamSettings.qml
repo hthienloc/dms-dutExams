@@ -5,6 +5,7 @@ import qs.Services
 import qs.Widgets
 import qs.Modules.Plugins
 
+
 PluginSettings {
     id: root
     pluginId: "dutExams"
