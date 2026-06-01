@@ -83,8 +83,12 @@ PluginComponent {
 
     // Called whenever the popout content might change size
     function updatePopoutSize() {
-        if (popoutColumn && popoutColumn.implicitHeight > 0) {
-            dynamicPopoutHeight = popoutColumn.implicitHeight;
+        try {
+            if (popoutColumn && popoutColumn.implicitHeight > 0) {
+                dynamicPopoutHeight = popoutColumn.implicitHeight;
+            }
+        } catch (e) {
+            // popoutColumn is not instantiated yet, ignore ReferenceError
         }
     }
 
