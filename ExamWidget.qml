@@ -27,7 +27,7 @@ PluginComponent {
         }
         
         if (fetchProcess.running) {
-            fetchProcess.terminate();
+            fetchProcess.running = false;
         }
         
         isLoading = true;

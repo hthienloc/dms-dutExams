@@ -2,7 +2,7 @@
     "id": "dutExams",
     "name": "DUT Exams",
     "description": "Displays final exam schedule from sv.dut.udn.vn",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "license": "MIT",
     "author": "Loc Huynh",
     "icon": "event",
